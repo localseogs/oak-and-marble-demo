@@ -1,6 +1,7 @@
 ---
 import wordmarkIvory from '../assets/brand/wordmark-ivory.png';
 import wordmarkChestnut from '../assets/brand/wordmark-chestnut.png';
+import { sitePath } from '../lib/site-path';
 
 interface Props {
 	current?: string;
@@ -12,7 +13,7 @@ const { current } = Astro.props;
 <header class="site-header" id="top">
 	<a class="skip" href="#content">Skip to content</a>
 	<div class="header-bar">
-		<a class="logo" href="/">
+		<a class="logo" href={sitePath('/')}>
 			<img
 				class="logo-on-photo"
 				src={wordmarkIvory.src}
@@ -34,14 +35,14 @@ const { current } = Astro.props;
 		</button>
 		<nav id="site-nav" class="site-nav" aria-label="Primary">
 			<div class="nav-side nav-side-start">
-				<a href="/#services">What We Do</a>
-				<a href="/#about">Our Story</a>
-				<a href="/#process">Our Process</a>
+				<a href={sitePath('/#services')}>What We Do</a>
+				<a href={sitePath('/#about')}>Our Story</a>
+				<a href={sitePath('/#process')}>Our Process</a>
 			</div>
 			<div class="nav-side nav-side-end">
-				<a href="/#work">Our Work</a>
-				<a href="/costs-guide" aria-current={current === 'costs-guide' ? 'page' : undefined}>Costs Guide</a>
-				<a href="/#inquire">Inquire</a>
+				<a href={sitePath('/#work')}>Our Work</a>
+				<a href={sitePath('/costs-guide')} aria-current={current === 'costs-guide' ? 'page' : undefined}>Costs Guide</a>
+				<a href={sitePath('/#inquire')}>Inquire</a>
 			</div>
 		</nav>
 	</div>

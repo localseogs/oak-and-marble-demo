@@ -1,3 +1,4 @@
+import { publicPath } from '../lib/site-path';
 import heroStill from '../assets/images/hero-kitchen-still.jpg';
 import kitchenPhoto from '../assets/images/editorial-kitchen.jpg';
 import bathroomPhoto from '../assets/images/editorial-bathroom.jpg';
@@ -41,8 +42,8 @@ export const heroPhoto = {
 };
 
 export const heroVideo = {
-	src: '/hero-kitchen.mp4',
-	poster: '/hero-kitchen-poster.jpg',
+	src: publicPath('hero-kitchen.mp4'),
+	poster: publicPath('hero-kitchen-poster.jpg'),
 	width: 2560,
 	height: 1440,
 	label: 'A view from oak kitchen cabinets across a marble island toward a living room and stair.',

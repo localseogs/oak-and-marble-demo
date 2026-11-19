@@ -19,6 +19,7 @@ import {
 	projectTypes,
 	statement,
 } from '../data/home';
+import { sitePath } from '../lib/site-path';
 
 const description =
 	'Oak & Marble is a design-build remodeling firm in Colleyville and North Texas. Kitchen design and remodeling leads the work, with whole-home and bathroom remodeling.';
@@ -300,7 +301,7 @@ const portfolioNext = portfolioSlides[1] ?? portfolioSlides[0];
 								))
 							}
 						</div>
-						<a class="hero-touch" href="/costs-guide">
+						<a class="hero-touch" href={sitePath('/costs-guide')}>
 							<span>Learn more</span>
 							<span class="hero-touch-arrow" aria-hidden="true"></span>
 						</a>
