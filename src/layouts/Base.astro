@@ -1,0 +1,324 @@
+---
+import '../styles/brand.css';
+import '../styles/global.css';
+import '@fontsource/montserrat/latin-400.css';
+import '@fontsource/montserrat/latin-400-italic.css';
+import '@fontsource/montserrat/latin-500.css';
+import wordmarkChestnut from '../assets/brand/wordmark-chestnut.png';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#F7F4ED" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<title>{title}</title>
+		<script is:inline>
+			(function () {
+				var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+				var reload = !!(nav && nav.type === 'reload');
+
+				if (reload) {
+					if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+					if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+					var pin = function () {
+						if (window.scrollX || window.scrollY) window.scrollTo(0, 0);
+					};
+					pin();
+					document.addEventListener('DOMContentLoaded', pin);
+					window.addEventListener('load', pin);
+					window.addEventListener('pageshow', pin);
+					window.addEventListener('scroll', pin, { passive: true });
+					window.addEventListener('oak-loader-done', function () {
+						window.removeEventListener('scroll', pin);
+					});
+				}
+
+				document.documentElement.classList.add('is-loading');
+				if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+					document.documentElement.classList.add('motion');
+				}
+
+				var blockScroll = function (event) {
+					event.preventDefault();
+				};
+				var blockKeys = function (event) {
+					var key = event.key;
+					if (
+						key === ' ' ||
+						key === 'Spacebar' ||
+						key === 'ArrowUp' ||
+						key === 'ArrowDown' ||
+						key === 'PageUp' ||
+						key === 'PageDown' ||
+						key === 'Home' ||
+						key === 'End'
+					) {
+						event.preventDefault();
+					}
+				};
+				window.addEventListener('wheel', blockScroll, { passive: false });
+				window.addEventListener('touchmove', blockScroll, { passive: false });
+				window.addEventListener('keydown', blockKeys);
+				window.addEventListener('oak-loader-done', function () {
+					document.documentElement.classList.remove('is-loading');
+					window.removeEventListener('wheel', blockScroll);
+					window.removeEventListener('touchmove', blockScroll);
+					window.removeEventListener('keydown', blockKeys);
+					if (reload || !location.hash) return;
+					var target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+					if (target) target.scrollIntoView();
+				});
+			})();
+		</script>
+	</head>
+	<body>
+		<div class="loader" data-loader role="status" aria-live="polite">
+			<div class="loader-panel">
+				<img
+					class="loader-mark"
+					src={wordmarkChestnut.src}
+					width={wordmarkChestnut.width}
+					height={wordmarkChestnut.height}
+					alt=""
+				/>
+				<div class="loader-track" aria-hidden="true">
+					<span class="loader-bar" data-loader-bar></span>
+				</div>
+			</div>
+			<span class="visually-hidden">Loading</span>
+		</div>
+		<noscript>
+			<style>
+				.loader {
+					display: none;
+				}
+			</style>
+		</noscript>
+		<script is:inline>
+			(function () {
+				var loader = document.querySelector('[data-loader]');
+				var bar = document.querySelector('[data-loader-bar]');
+				if (!loader || !bar) {
+					window.dispatchEvent(new Event('oak-loader-done'));
+					return;
+				}
+				var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+				var duration = reduce ? 300 : 2800;
+				var hold = reduce ? 0 : 900;
+				var start = performance.now();
+				var pageReady = document.readyState === 'complete';
+				var filled = false;
+				var gone = false;
+
+				function paint(amount) {
+					bar.style.width = Math.round(Math.min(1, Math.max(0, amount)) * 100) + '%';
+				}
+
+				function hide() {
+					if (gone) return;
+					gone = true;
+					paint(1);
+					window.setTimeout(function () {
+						loader.classList.add('is-done');
+						loader.setAttribute('aria-hidden', 'true');
+						var removed = false;
+						var remove = function () {
+							if (removed) return;
+							removed = true;
+							if (loader.parentNode) loader.remove();
+							window.dispatchEvent(new Event('oak-loader-done'));
+						};
+						loader.addEventListener('transitionend', function (event) {
+							if (event.propertyName === 'opacity') remove();
+						});
+						window.setTimeout(remove, 1200);
+					}, hold);
+				}
+
+				function frame(now) {
+					var t = Math.min(1, (now - start) / duration);
+					paint(1 - Math.pow(1 - t, 3));
+					if (t < 1) {
+						window.requestAnimationFrame(frame);
+						return;
+					}
+					filled = true;
+					if (pageReady) hide();
+				}
+
+				if (!pageReady) {
+					window.addEventListener('load', function () {
+						pageReady = true;
+						if (filled) hide();
+					});
+				}
+				window.setTimeout(function () {
+					pageReady = true;
+					filled = true;
+					hide();
+				}, 8000);
+				window.requestAnimationFrame(frame);
+			})();
+		</script>
+		<slot />
+		<script is:inline>
+			(function () {
+				if (!document.documentElement.classList.contains('motion')) return;
+
+				var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-slide], [data-wipe]'));
+				if (!nodes.length) return;
+
+				function play(el) {
+					if (el.classList.contains('is-in')) return;
+					el.classList.add('is-in');
+					el.addEventListener('animationend', function (event) {
+						if (event.target !== el) return;
+						el.classList.add('is-settled');
+					});
+				}
+
+				function start() {
+					if (!('IntersectionObserver' in window)) {
+						nodes.forEach(play);
+						return;
+					}
+
+					var grouped = new Set();
+					var sequences = Array.prototype.slice.call(document.querySelectorAll('[data-sequence]'));
+
+					sequences.forEach(function (section) {
+						section.querySelectorAll('[data-slide], [data-wipe]').forEach(function (el) {
+							grouped.add(el);
+						});
+					});
+
+					function onEntries(entries, observer) {
+						var fresh = [];
+						entries.forEach(function (entry) {
+							if (!entry.isIntersecting) return;
+							observer.unobserve(entry.target);
+							if (!entry.target.classList.contains('is-in')) fresh.push(entry.target);
+						});
+						fresh.sort(function (a, b) {
+							return a.compareDocumentPosition(b) & 4 ? -1 : 1;
+						});
+						fresh.forEach(function (el, index) {
+							if (el.closest('[data-sequence].is-stacked')) {
+								el.style.animationDelay = fresh.length > 1 ? index * 0.1 + 's' : '0s';
+							}
+							play(el);
+						});
+					}
+
+					var io = new IntersectionObserver(onEntries, {
+						threshold: 0.22,
+						rootMargin: '0px 0px -6% 0px',
+					});
+
+					var wipeIo = new IntersectionObserver(onEntries, {
+						threshold: 0.55,
+						rootMargin: '0px 0px -8% 0px',
+					});
+
+					nodes.forEach(function (el) {
+						if (grouped.has(el) || el.getAttribute('data-slide') === 'hold') return;
+						if (el.hasAttribute('data-wipe')) wipeIo.observe(el);
+						else io.observe(el);
+					});
+
+					var sequenceIo = new IntersectionObserver(
+						function (entries) {
+							entries.forEach(function (entry) {
+								if (!entry.isIntersecting) return;
+								entry.target.querySelectorAll('[data-slide], [data-wipe]').forEach(play);
+								sequenceIo.unobserve(entry.target);
+							});
+						},
+						{ threshold: 0.28 },
+					);
+
+					var stackedState = new WeakMap();
+
+					function isStacked(section) {
+						return section.getBoundingClientRect().height > window.innerHeight * 1.05;
+					}
+
+					function bindSequences() {
+						sequences.forEach(function (section) {
+							var slides = Array.prototype.slice.call(
+								section.querySelectorAll('[data-slide], [data-wipe]'),
+							);
+							var stacked = isStacked(section);
+							if (stackedState.get(section) === stacked) return;
+							stackedState.set(section, stacked);
+							section.classList.toggle('is-stacked', stacked);
+							sequenceIo.unobserve(section);
+							slides.forEach(function (el) {
+								io.unobserve(el);
+								wipeIo.unobserve(el);
+							});
+							if (
+								slides.length &&
+								slides.every(function (el) {
+									return el.classList.contains('is-in');
+								})
+							) {
+								return;
+							}
+							if (stacked) {
+								slides.forEach(function (el) {
+									if (el.classList.contains('is-in')) return;
+									if (el.hasAttribute('data-wipe')) wipeIo.observe(el);
+									else io.observe(el);
+								});
+								return;
+							}
+							sequenceIo.observe(section);
+						});
+					}
+
+					bindSequences();
+					window.addEventListener('load', bindSequences);
+					window.addEventListener('resize', bindSequences);
+
+					var materials = document.querySelector('.materials');
+					if (!materials) return;
+					var held = materials.querySelectorAll('[data-slide="hold"]');
+					var release = function () {
+						if (!materials.classList.contains('is-shown')) return;
+						held.forEach(play);
+					};
+					new MutationObserver(release).observe(materials, {
+						attributes: true,
+						attributeFilter: ['class'],
+					});
+					release();
+				}
+
+				var loader = document.querySelector('[data-loader]');
+				if (!loader || loader.classList.contains('is-done')) {
+					start();
+					return;
+				}
+
+				new MutationObserver(function (_records, obs) {
+					if (!loader.classList.contains('is-done')) return;
+					obs.disconnect();
+					start();
+				}).observe(loader, { attributes: true, attributeFilter: ['class'] });
+			})();
+		</script>
+	</body>
+</html>

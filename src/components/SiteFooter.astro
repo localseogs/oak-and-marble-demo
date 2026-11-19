@@ -1,0 +1,36 @@
+---
+import { company } from '../data/home';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" data-slide style="--delay: 0.12s">
+	<div class="footer-layout">
+		<div class="footer-side">
+			<a href="/#inquire">Contact us</a>
+			<a href={`mailto:${company.email}`}>{company.email}</a>
+		</div>
+		<nav class="footer-links" aria-label="Footer">
+			<a href="/#services">What We Do</a>
+			<a href="/#about">Our Story</a>
+			<a href="/#process">Our Process</a>
+			<a href="/#work">Our Work</a>
+			<a href="/investment" aria-current={Astro.url.pathname === '/investment' ? 'page' : undefined}>Investment</a>
+			<a href="/#inquire">Inquire</a>
+		</nav>
+		<a class="footer-top" href="/" aria-label="Back to start">
+			<span class="footer-top-arrow" aria-hidden="true"></span>
+		</a>
+	</div>
+	<p class="footer-note">Copyright {year} Oak &amp; Marble</p>
+</footer>
+
+<script>
+	const toTop = document.querySelector('.footer-top');
+
+	toTop?.addEventListener('click', (event) => {
+		if (window.location.pathname !== '/') return;
+		event.preventDefault();
+		window.scrollTo({ top: 0, behavior: 'auto' });
+	});
+</script>

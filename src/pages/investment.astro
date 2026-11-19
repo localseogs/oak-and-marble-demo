@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { company, investmentSheets, investmentTerms } from '../data/home';
+
+const description =
+	'Typical project investments for Oak & Marble remodeling in Colleyville and North Texas. A large, finish-only kitchen at a basic level is $120,000–$170,000. A bathroom is $75,000. Not a quote or a starting price.';
+---
+
+<Base title={`Investment — ${company.name}`} description={description}>
+	<SiteHeader current="investment" />
+	<main id="content" class="investment-page">
+		{
+			investmentSheets.map((sheet, index) => {
+				const Heading = index === 0 ? 'h1' : 'h2';
+				return (
+					<article class="investment-sheet" aria-labelledby={`${sheet.id}-amount`}>
+						<figure class="investment-sheet-photo">
+							<div class="investment-sheet-frame">
+								<img
+									data-slide
+									src={sheet.image.src}
+									width={sheet.image.width}
+									height={sheet.image.height}
+									alt={sheet.alt}
+									style={`object-position: ${sheet.focus}`}
+									decoding="async"
+								/>
+							</div>
+						</figure>
+						<div class="investment-sheet-copy" data-slide style="--delay: 0.16s">
+							<p class="kicker">{sheet.label}</p>
+							<Heading id={`${sheet.id}-amount`}>{sheet.amount}</Heading>
+							<p class="investment-sheet-lead">{sheet.text}</p>
+							{
+								sheet.rows.length > 0 && (
+									<dl class="investment-specs">
+										{sheet.rows.map((row) => (
+											<div>
+												<dt>{row.title}</dt>
+												<dd>{row.text}</dd>
+											</div>
+										))}
+									</dl>
+								)
+							}
+						</div>
+					</article>
+				);
+			})
+		}
+		<section class="investment-terms" aria-label="How an investment is figured">
+			<ul>
+				{investmentTerms.map((term, index) => (
+					<li data-slide style={`--delay: ${index * 0.12}s`}>{term}</li>
+				))}
+			</ul>
+		</section>
+	</main>
+	<SiteFooter />
+</Base>

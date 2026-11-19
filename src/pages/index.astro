@@ -1,0 +1,579 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import {
+	aboutPhoto,
+	company,
+	editorial,
+	heroPhoto,
+	investmentGuide,
+	investmentPhoto,
+	investments,
+	materials,
+	portfolio,
+	processClose,
+	processIntro,
+	processPhoto,
+	processPoints,
+	projectTypes,
+	statement,
+} from '../data/home';
+
+const description =
+	'Oak & Marble is a design-build remodeling firm in Colleyville and North Texas. Kitchen design and remodeling leads the work, with whole-home and bathroom remodeling.';
+
+const portfolioSlides = portfolio.flatMap((project) =>
+	project.photos.map((photo) => ({
+		room: project.room,
+		title: project.title,
+		text: project.text,
+		src: photo.image.src,
+		width: photo.image.width,
+		height: photo.image.height,
+		alt: photo.alt,
+		caption: photo.caption,
+	})),
+);
+const portfolioTotal = String(portfolioSlides.length).padStart(2, '0');
+const portfolioFirst = portfolioSlides[0];
+const portfolioNext = portfolioSlides[1] ?? portfolioSlides[0];
+
+---
+
+<Base title={`${company.name} — ${company.mark}`} description={description}>
+	<SiteHeader />
+	<main id="content">
+		<section class="hero" aria-labelledby="approach-title">
+			<img
+				class="hero-photo"
+				src={heroPhoto.src}
+				width={heroPhoto.width}
+				height={heroPhoto.height}
+				alt={heroPhoto.alt}
+				decoding="async"
+			/>
+			<div class="hero-veil" data-hero-veil aria-hidden="true"></div>
+			<div class="hero-copy">
+				<h1 id="approach-title">
+					<span>Build.</span>
+					<span class="hero-emphasis">Design.</span>
+					<span class="hero-last">Remodel.</span>
+				</h1>
+				<div class="hero-aside">
+					<p>
+						From the first design conversation to the final detail, thoughtful design and craftsmanship
+						come together for a home that feels distinctly yours.
+					</p>
+					<a class="hero-touch" href="#inquire">
+						<span>Get in touch</span>
+						<span class="hero-touch-arrow" aria-hidden="true"></span>
+					</a>
+				</div>
+			</div>
+		</section>
+		<div class="page-sheet">
+		<section class="about-overlap cover" id="about" aria-labelledby="about-title">
+			<div class="about-overlap-grid">
+				<div class="about-overlap-copy">
+					<p class="about-overlap-kicker" data-fade style="--delay: 0">About Us</p>
+					<div class="about-overlap-foot">
+						<h2 id="about-title" data-fade style="--delay: 0.08">
+							<span>Design should</span>
+							<span class="about-emphasis">feel personal.</span>
+						</h2>
+						<p class="about-overlap-body" data-fade style="--delay: 0.26">
+							Every remodeling project begins with the people who live in the space. Thoughtful planning,
+							considered materials, and personal guidance make a remarkable home possible.
+						</p>
+						<a class="hero-touch" href="#process" data-fade style="--delay: 0.4">
+							<span>Learn more</span>
+							<span class="hero-touch-arrow" aria-hidden="true"></span>
+						</a>
+					</div>
+				</div>
+				<figure class="about-overlap-photo" data-fade style="--delay: 0.14">
+					<img
+						src={aboutPhoto.image.src}
+						width={aboutPhoto.image.width}
+						height={aboutPhoto.image.height}
+						alt={aboutPhoto.alt}
+						style={`object-position: ${aboutPhoto.focus}`}
+						decoding="async"
+					/>
+				</figure>
+			</div>
+		</section>
+
+		<section class="statement cover" id="statement" aria-labelledby="statement-title">
+			<div class="statement-inner" data-wipe>
+				<h2 id="statement-title">
+					Thoughtfully designed. Beautifully remodeled.
+				</h2>
+				<p class="statement-experience">
+					With over 10 years of design and remodeling experience.
+				</p>
+				<div>
+					<p class="statement-label">{statement.missionLabel}</p>
+					<p class="statement-mission">{statement.mission}</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="editorial cover" id="services" aria-labelledby="services-label">
+			<p class="editorial-kicker" id="services-label" data-fade style="--delay: 0">What we do</p>
+			<div class="editorial-list">
+				{
+					editorial.map((piece, index) => (
+						<article class="editorial-piece" data-fade style={`--delay: ${0.08 + index * 0.1}`}>
+							<figure class="editorial-figure">
+								<img
+									src={piece.image.src}
+									width={piece.image.width}
+									height={piece.image.height}
+									alt={piece.alt}
+									style={`object-position: ${piece.focus}`}
+									loading="lazy"
+									decoding="async"
+								/>
+								<h2 class="editorial-title">
+									<span>{piece.title}</span>
+								</h2>
+							</figure>
+						</article>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="approach cover" id="process" data-sequence aria-labelledby="process-title">
+			<div class="approach-layout">
+				<div class="approach-intro" data-slide>
+					<h2 id="process-title">{processIntro.title}</h2>
+					<p>{processIntro.text}</p>
+				</div>
+				<figure class="approach-still" data-slide>
+					<img
+						src={processPhoto.image.src}
+						width={processPhoto.image.width}
+						height={processPhoto.image.height}
+						alt={processPhoto.alt}
+						style={`object-position: ${processPhoto.focus}`}
+						decoding="async"
+					/>
+				</figure>
+				{
+					processPoints.map((point, index) => (
+						<article
+							class={`approach-stat approach-stat-${index + 1}`}
+							data-slide
+						>
+							<p><strong>{point.name}.</strong> {point.text}</p>
+							<span>{point.index}</span>
+						</article>
+					))
+				}
+				<aside class="approach-close" data-slide>
+					<div class="approach-close-stage">
+						<p><strong>{processClose.name}.</strong> {processClose.text}</p>
+						<span>{processClose.index}</span>
+					</div>
+					<a href="#inquire">
+						{processClose.link}
+						<span aria-hidden="true">→</span>
+					</a>
+				</aside>
+			</div>
+		</section>
+
+		<section class="portfolio cover" id="work" aria-labelledby="work-kicker">
+			<div class="portfolio-intro" data-slide>
+				<p class="eyebrow" id="work-kicker">Recent work</p>
+			</div>
+			<div class="portfolio-board" data-portfolio tabindex="0">
+				<figure class="portfolio-main" data-slide style="--delay: 0.14s">
+					<img
+						data-portfolio-big
+						src={portfolioFirst.src}
+						width={portfolioFirst.width}
+						height={portfolioFirst.height}
+						alt={portfolioFirst.alt}
+					/>
+				</figure>
+				<div class="portfolio-side" data-slide style="--delay: 0.28s">
+					<div class="portfolio-meta">
+						<p data-portfolio-room>{portfolioFirst.room}</p>
+						<p data-portfolio-count>01/{portfolioTotal}</p>
+					</div>
+					<div data-portfolio-copy aria-live="polite">
+						<h3 data-portfolio-title>{portfolioFirst.title}</h3>
+						<p data-portfolio-text>{portfolioFirst.text}</p>
+					</div>
+					<div class="portfolio-preview">
+						<button type="button" data-portfolio-advance aria-label="Show the next photo">
+							<img
+								data-portfolio-small
+								src={portfolioNext.src}
+								width={portfolioNext.width}
+								height={portfolioNext.height}
+								alt=""
+							/>
+						</button>
+						<p data-portfolio-upcoming>{portfolioNext.caption}</p>
+					</div>
+					<div class="portfolio-strip" data-portfolio-strip>
+						{
+							portfolioSlides.map((slide, index) => (
+								<button
+									type="button"
+									data-portfolio-thumb
+									data-index={index}
+									aria-label={`Show ${slide.caption}`}
+								>
+									<img src={slide.src} width={slide.width} height={slide.height} alt="" />
+								</button>
+							))
+						}
+					</div>
+					<div class="portfolio-foot">
+						<p data-portfolio-note>{portfolioFirst.caption}</p>
+						<div class="portfolio-nav">
+							<button type="button" data-portfolio-prev aria-label="Previous photo">
+								<span class="portfolio-arrow portfolio-arrow-prev" aria-hidden="true"></span>
+							</button>
+							<button type="button" data-portfolio-next aria-label="Next photo">
+								<span class="portfolio-arrow" aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="materials cover is-staged" aria-labelledby="materials-title">
+			<div class="materials-intro" data-materials-intro>
+				<h2 id="materials-title">Materials</h2>
+			</div>
+			<div class="material-grid" data-materials-grid>
+				{
+					materials.map((material, index) => (
+						<button
+							type="button"
+							class="material-tile"
+							data-slide="hold"
+							style={`--delay: ${index * 0.1}s`}
+							aria-expanded="false"
+						>
+							<img
+								src={material.image.src}
+								width={material.image.width}
+								height={material.image.height}
+								alt=""
+								style={`object-position: ${material.focus}`}
+								decoding="async"
+							/>
+							<span class="material-label">
+								<span class="material-name">{material.title}</span>
+								<span class="material-note">{material.text}</span>
+							</span>
+						</button>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="investment cover" aria-labelledby="investment-title">
+			<div class="investment-layout">
+				<div class="investment-copy">
+					<div class="investment-guide" data-fade style="--delay: 0">
+						<p class="eyebrow">Investment Guide</p>
+						<div class="investment-board">
+							<h2 id="investment-title">{investmentGuide.title}</h2>
+							<p class="investment-aside">{investmentGuide.text}</p>
+							{
+								investments.map((item) => (
+									<article>
+										<p class="kicker">{item.title}</p>
+										<p class="amount">{item.amount}</p>
+										<p>{item.note}</p>
+									</article>
+								))
+							}
+						</div>
+						<a class="hero-touch" href="/investment">
+							<span>Learn more</span>
+							<span class="hero-touch-arrow" aria-hidden="true"></span>
+						</a>
+					</div>
+				</div>
+				<figure class="investment-photo" data-fade style="--delay: 0.08">
+					<img
+						src={investmentPhoto.image.src}
+						width={investmentPhoto.image.width}
+						height={investmentPhoto.image.height}
+						alt={investmentPhoto.alt}
+						decoding="async"
+					/>
+				</figure>
+			</div>
+		</section>
+
+		<section class="invite" id="inquire" aria-labelledby="inquire-title">
+			<div class="invite-panel">
+				<div class="invite-copy" data-slide>
+					<p class="eyebrow">Contact us</p>
+					<h2 id="inquire-title">
+						<span>Discuss a</span>
+						<span>project.</span>
+					</h2>
+					<p>
+						A kitchen, a bathroom, or a larger remodeling of the rooms you live in. Share the place, the
+						timing, and what should stay.
+					</p>
+				</div>
+				<form id="inquiry" class="inquiry" data-slide style="--delay: 0.18s" data-email={company.email} novalidate>
+					<div class="field">
+						<label for="name">Name</label>
+						<input id="name" name="name" type="text" autocomplete="name" required maxlength="80" />
+					</div>
+					<div class="inquiry-row">
+						<div class="field">
+							<label for="phone">Phone</label>
+							<input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40" />
+						</div>
+						<div class="field">
+							<label for="email">Email</label>
+							<input id="email" name="email" type="email" autocomplete="email" required maxlength="120" />
+						</div>
+					</div>
+					<div class="field">
+						<label for="kind">Project</label>
+						<select id="kind" name="kind" required>
+							<option value="">Select one</option>
+							{projectTypes.map((type) => <option value={type}>{type}</option>)}
+						</select>
+					</div>
+					<div class="field">
+						<label for="message">Message</label>
+						<textarea id="message" name="message" required maxlength="2000"></textarea>
+					</div>
+					<button class="hero-touch inquiry-send" type="submit">
+						<span>Send request</span>
+						<span class="hero-touch-arrow" aria-hidden="true"></span>
+					</button>
+					<p class="form-note" id="form-note">This opens your email app with the message filled in.</p>
+				</form>
+			</div>
+			<SiteFooter />
+		</section>
+		<script is:inline>
+			(function () {
+				if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+					document.querySelector('.materials')?.classList.remove('is-staged');
+					return;
+				}
+				document.querySelectorAll('.cover').forEach(function (section) {
+					section.classList.add('is-pending');
+				});
+			})();
+		</script>
+		</div>
+	</main>
+</Base>
+
+<script>
+	const form = document.querySelector<HTMLFormElement>('#inquiry');
+	const note = document.querySelector('#form-note');
+
+	form?.addEventListener('submit', (event) => {
+		event.preventDefault();
+		if (!form.reportValidity()) return;
+
+		const data = new FormData(form);
+		const email = form.dataset.email ?? '';
+		const name = String(data.get('name') ?? '').trim();
+		const from = String(data.get('email') ?? '').trim();
+		const phone = String(data.get('phone') ?? '').trim();
+		const kind = String(data.get('kind') ?? '').trim();
+		const message = String(data.get('message') ?? '').trim();
+		const lines = [`Name: ${name}`, `Email: ${from}`];
+		if (phone) lines.push(`Phone: ${phone}`);
+		lines.push(`Project: ${kind}`, '', message);
+		const body = lines.join('\n');
+		const href = `mailto:${email}?subject=${encodeURIComponent(`Inquiry from ${name}`)}&body=${encodeURIComponent(body)}`;
+
+		if (note) note.textContent = 'Opening your email app…';
+		window.location.href = href;
+	});
+
+	const hero = document.querySelector<HTMLElement>('.hero');
+	const heroVeil = hero?.querySelector<HTMLElement>('[data-hero-veil]');
+	if (hero && heroVeil && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+		hero.addEventListener('pointermove', (event) => {
+			const box = hero.getBoundingClientRect();
+			heroVeil.style.setProperty('--spot-x', `${event.clientX - box.left}px`);
+			heroVeil.style.setProperty('--spot-y', `${event.clientY - box.top}px`);
+			heroVeil.classList.add('is-lit');
+		});
+		hero.addEventListener('pointerleave', () => {
+			heroVeil.classList.remove('is-lit');
+		});
+	}
+
+	const heroCopy = hero?.querySelector<HTMLElement>('.hero-copy');
+	const heroNext = hero?.nextElementSibling;
+	if (hero && heroCopy && heroNext instanceof HTMLElement) {
+		const fadeCopy = () => {
+			const heroBox = hero.getBoundingClientRect();
+			const nextTop = heroNext.getBoundingClientRect().top;
+			const span = Math.max(heroBox.height, 1);
+			const covered = Math.min(span, Math.max(0, heroBox.bottom - nextTop));
+			const progress = covered / span;
+			heroCopy.style.opacity = (1 - progress).toFixed(3);
+			heroCopy.classList.toggle('is-faded', progress > 0.92);
+		};
+
+		fadeCopy();
+		window.addEventListener('scroll', fadeCopy, { passive: true });
+		window.addEventListener('resize', fadeCopy);
+	}
+
+	const covers = [...document.querySelectorAll<HTMLElement>('.cover')];
+
+	if (covers.some((section) => section.classList.contains('is-pending'))) {
+		const paintCovers = () => {
+			const height = window.innerHeight || 1;
+			const stick = Number.parseFloat(getComputedStyle(covers[0]).top) || 0;
+			const start = height * 0.72;
+			const span = Math.max(start - stick, 1);
+			covers.forEach((section) => {
+				const top = section.getBoundingClientRect().top;
+				const reveal = Math.min(1, Math.max(0, (start - top) / span));
+				section.style.setProperty('--reveal', reveal.toFixed(3));
+			});
+		};
+
+		paintCovers();
+		window.addEventListener('scroll', paintCovers, { passive: true });
+		window.addEventListener('resize', paintCovers);
+	}
+
+	const materialsPanel = document.querySelector<HTMLElement>('.materials');
+	const materialsNext = materialsPanel?.nextElementSibling;
+
+	if (materialsPanel?.classList.contains('is-staged') && materialsNext instanceof HTMLElement) {
+		const paintMaterials = () => {
+			const hold = Number.parseFloat(getComputedStyle(materialsPanel).marginBottom) || 1;
+			const nextTop = materialsNext.getBoundingClientRect().top;
+			const view = window.innerHeight || 1;
+			const progress = Math.min(1, Math.max(0, (view + hold - nextTop) / hold));
+			const fade = Math.min(1, Math.max(0, (progress - 0.34) / 0.38));
+			const eased = fade * fade * (3 - 2 * fade);
+			materialsPanel.style.setProperty('--materials-intro', (1 - eased).toFixed(3));
+			materialsPanel.classList.toggle('is-shown', eased > 0.62);
+		};
+
+		paintMaterials();
+		window.addEventListener('scroll', paintMaterials, { passive: true });
+		window.addEventListener('resize', paintMaterials);
+	}
+
+	const materialTiles = [...document.querySelectorAll<HTMLButtonElement>('.material-tile')];
+	materialTiles.forEach((tile) => {
+		tile.addEventListener('click', () => {
+			const willOpen = !tile.classList.contains('is-open');
+			materialTiles.forEach((item) => {
+				item.classList.remove('is-open');
+				item.setAttribute('aria-expanded', 'false');
+			});
+			if (willOpen) {
+				tile.classList.add('is-open');
+				tile.setAttribute('aria-expanded', 'true');
+			}
+		});
+	});
+</script>
+
+<script define:vars={{ slides: portfolioSlides }}>
+	const root = document.querySelector('[data-portfolio]');
+
+	if (root && Array.isArray(slides) && slides.length > 1) {
+		const big = root.querySelector('[data-portfolio-big]');
+		const small = root.querySelector('[data-portfolio-small]');
+		const room = root.querySelector('[data-portfolio-room]');
+		const count = root.querySelector('[data-portfolio-count]');
+		const title = root.querySelector('[data-portfolio-title]');
+		const text = root.querySelector('[data-portfolio-text]');
+		const note = root.querySelector('[data-portfolio-note]');
+		const upcoming = root.querySelector('[data-portfolio-upcoming]');
+		const strip = root.querySelector('[data-portfolio-strip]');
+		const thumbs = [...root.querySelectorAll('[data-portfolio-thumb]')];
+		const total = String(slides.length).padStart(2, '0');
+		const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		let index = 0;
+		let token = 0;
+
+		const placeThumbs = () => {
+			thumbs.forEach((thumb, slideIndex) => {
+				const ahead = (slideIndex - index - 1 + slides.length) % slides.length;
+				const isCurrent = slideIndex === index;
+				thumb.hidden = isCurrent;
+				thumb.style.order = String(isCurrent ? slides.length : ahead);
+				thumb.classList.toggle('is-next', !isCurrent && ahead === 0);
+			});
+			if (strip) strip.scrollTo({ left: 0, behavior: reduce ? 'auto' : 'smooth' });
+		};
+
+		const show = (nextIndex) => {
+			const current = slides[nextIndex];
+			const following = slides[(nextIndex + 1) % slides.length];
+			index = nextIndex;
+			const id = ++token;
+
+			const apply = () => {
+				if (id !== token) return;
+				big.src = current.src;
+				big.alt = current.alt;
+				small.src = following.src;
+				room.textContent = current.room;
+				count.textContent = `${String(nextIndex + 1).padStart(2, '0')}/${total}`;
+				title.textContent = current.title;
+				text.textContent = current.text;
+				note.textContent = current.caption;
+				upcoming.textContent = following.caption;
+				placeThumbs();
+				requestAnimationFrame(() => big.classList.remove('is-fading'));
+			};
+
+			if (reduce) {
+				apply();
+				return;
+			}
+
+			big.classList.add('is-fading');
+			window.setTimeout(apply, 180);
+		};
+
+		const step = (direction) => {
+			show((index + direction + slides.length) % slides.length);
+		};
+
+		root.querySelector('[data-portfolio-next]').addEventListener('click', () => step(1));
+		root.querySelector('[data-portfolio-prev]').addEventListener('click', () => step(-1));
+		root.querySelector('[data-portfolio-advance]').addEventListener('click', () => step(1));
+		thumbs.forEach((thumb) => {
+			thumb.addEventListener('click', () => show(Number(thumb.dataset.index)));
+		});
+		placeThumbs();
+		root.addEventListener('keydown', (event) => {
+			if (event.key === 'ArrowRight') {
+				event.preventDefault();
+				step(1);
+			}
+			if (event.key === 'ArrowLeft') {
+				event.preventDefault();
+				step(-1);
+			}
+		});
+	}
+</script>

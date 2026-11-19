@@ -1,0 +1,33 @@
+---
+description: Oak & Marble brand, voice, color, and type for this site
+alwaysApply: true
+---
+
+# Oak & Marble
+
+Public name is **Oak & Marble**. Lockup line: Design · Build · Remodel. Never “Marble & Oak.”
+
+Boutique design-build remodeling for homeowners in Colleyville and nearby North Texas. Kitchen design and remodeling is the primary service. Whole-home and bathroom remodeling are core. Do not offer or imply new-home construction, general contracting, or standalone cabinetry or carpentry.
+
+Voice is warm, clear, and human. Lead line: “Thoughtfully designed. Beautifully remodeled.” No inflated luxury claims or sales language. Do not present concept photos, stock photos, or supplier names as Oak & Marble projects or as an exclusive dealer relationship.
+
+## Visual system
+
+Tokens live in `src/styles/brand.css`. Use these values:
+
+- Ivory `#F7F4ED` — page background
+- Limestone `#E7DDCF` — quiet bands
+- Warm Stone `#C9B7A3` — rules and dividers only (fails as text on ivory)
+- Chestnut `#6E4E37` — labels and accents
+- Charcoal `#3A342E` — text and dark bands
+
+Titles and body use Montserrat through `--font-sans`. The wordmark stays artwork, not typed text: `src/assets/brand/wordmark-chestnut.png` on ivory, `src/assets/brand/wordmark-ivory.png` on charcoal. Do not set type in Cormorant, Canela, Didot, or Bodoni.
+
+## Facts to keep exact
+
+- Team experience is 10+ years. The company is a new independent brand, not a 10-year-old firm.
+- 2-year labor and materials warranty, subject to the project warranty terms.
+- Consultation is complimentary. The design fee is separate and is not credited toward construction.
+- Typical investment, not a quote or starting price: a large, finish-only kitchen at a basic level is $120,000–$170,000. Bathroom $75,000. Appliance purchase is not included in the kitchen range. Whole-home work is quoted from the approved design.
+
+Approved nav: What We Do, Our Story, Our Process, Our Work, Investment, Inquire. Our Story is the about section. Investment is its own page. Keep location pages out of the main menu. Do not present concept photos, stock photos, or supplier names as Oak & Marble projects.

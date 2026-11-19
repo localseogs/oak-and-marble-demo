@@ -1,0 +1,76 @@
+---
+import wordmarkIvory from '../assets/brand/wordmark-ivory.png';
+import wordmarkChestnut from '../assets/brand/wordmark-chestnut.png';
+
+interface Props {
+	current?: string;
+}
+
+const { current } = Astro.props;
+---
+
+<header class="site-header" id="top">
+	<a class="skip" href="#content">Skip to content</a>
+	<div class="header-bar">
+		<a class="logo" href="/">
+			<img
+				class="logo-on-photo"
+				src={wordmarkIvory.src}
+				width={wordmarkIvory.width}
+				height={wordmarkIvory.height}
+				alt="Oak & Marble. Design, build, remodel."
+			/>
+			<img
+				class="logo-on-ivory"
+				src={wordmarkChestnut.src}
+				width={wordmarkChestnut.width}
+				height={wordmarkChestnut.height}
+				alt=""
+			/>
+		</a>
+		<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+			<span class="nav-toggle-open">Menu</span>
+			<span class="nav-toggle-close">Close</span>
+		</button>
+		<nav id="site-nav" class="site-nav" aria-label="Primary">
+			<div class="nav-side nav-side-start">
+				<a href="/#services">What We Do</a>
+				<a href="/#about">Our Story</a>
+				<a href="/#process">Our Process</a>
+			</div>
+			<div class="nav-side nav-side-end">
+				<a href="/#work">Our Work</a>
+				<a href="/investment" aria-current={current === 'investment' ? 'page' : undefined}>Investment</a>
+				<a href="/#inquire">Inquire</a>
+			</div>
+		</nav>
+	</div>
+</header>
+
+<script>
+	const toggle = document.querySelector('.nav-toggle');
+	const nav = document.querySelector('#site-nav');
+	const desktop = window.matchMedia('(min-width: 960px)');
+
+	function setOpen(open: boolean) {
+		nav?.classList.toggle('is-open', open);
+		toggle?.setAttribute('aria-expanded', String(open));
+	}
+
+	toggle?.addEventListener('click', () => {
+		const open = toggle.getAttribute('aria-expanded') === 'true';
+		setOpen(!open);
+	});
+
+	nav?.querySelectorAll('a').forEach((link) => {
+		link.addEventListener('click', () => setOpen(false));
+	});
+
+	document.addEventListener('keydown', (event) => {
+		if (event.key === 'Escape') setOpen(false);
+	});
+
+	desktop.addEventListener('change', () => {
+		if (desktop.matches) setOpen(false);
+	});
+</script>

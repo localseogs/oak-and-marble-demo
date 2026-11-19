@@ -1,0 +1,13 @@
+:root {
+	--ivory: #f7f4ed;
+	--limestone: #e7ddcf;
+	--warm-stone: #c9b7a3;
+	--chestnut: #6e4e37;
+	--charcoal: #3a342e;
+	--line: rgba(58, 52, 46, 0.16);
+	/* Titles use the same face as the body. */
+	--font-sans: 'Montserrat', 'Avenir Next', 'Segoe UI', sans-serif;
+	--font-display: var(--font-sans);
+	--wrap: min(1120px, calc(100% - 2.5rem));
+	color-scheme: light;
+}
