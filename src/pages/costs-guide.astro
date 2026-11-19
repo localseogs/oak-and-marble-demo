@@ -5,11 +5,11 @@ import SiteFooter from '../components/SiteFooter.astro';
 import { company, investmentSheets, investmentTerms } from '../data/home';
 
 const description =
-	'Typical project investments for Oak & Marble remodeling in Colleyville and North Texas. A large, finish-only kitchen at a basic level is $120,000–$170,000. A bathroom is $75,000. Not a quote or a starting price.';
+	'Typical project costs for Oak & Marble remodeling in Colleyville and North Texas. A large, finish-only kitchen at a basic level is $120,000–$170,000. A bathroom is $75,000. Not a quote or a starting price.';
 ---
 
-<Base title={`Investment — ${company.name}`} description={description}>
-	<SiteHeader current="investment" />
+<Base title={`Costs Guide — ${company.name}`} description={description}>
+	<SiteHeader current="costs-guide" />
 	<main id="content" class="investment-page">
 		{
 			investmentSheets.map((sheet, index) => {
@@ -50,7 +50,7 @@ const description =
 				);
 			})
 		}
-		<section class="investment-terms" aria-label="How an investment is figured">
+		<section class="investment-terms" aria-label="How a project cost is figured">
 			<ul>
 				{investmentTerms.map((term, index) => (
 					<li data-slide style={`--delay: ${index * 0.12}s`}>{term}</li>

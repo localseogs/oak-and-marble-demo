@@ -331,7 +331,7 @@ export const investmentPhoto = {
 
 export const investmentGuide = {
 	title: 'Clarity before construction.',
-	text: 'Every project is unique. A typical investment depends on the design, materials, and scope. It is not a starting price, a minimum budget, or a fixed quote.',
+	text: 'Every project is unique. A typical project cost depends on the design, materials, and scope. It is not a starting price, a minimum budget, or a fixed quote.',
 };
 
 const kitchenInvestment = '$120,000–$170,000';
@@ -377,7 +377,7 @@ export const investmentSheets = [
 		id: 'kitchen',
 		label: 'Kitchen',
 		amount: kitchenInvestment,
-		text: 'A large, finish-only kitchen at a basic level. Typical investment for this scope, not a quote or a starting price. Appliance purchase is not included.',
+		text: 'A large, finish-only kitchen at a basic level. Typical cost range for this scope, not a quote or a starting price. Appliance purchase is not included.',
 		image: kitchenPhoto,
 		alt: 'A kitchen with a marble island, globe pendants, light wood cabinets, and three stools.',
 		focus: 'center 46%',
@@ -387,7 +387,7 @@ export const investmentSheets = [
 		id: 'bathroom',
 		label: 'Bathroom',
 		amount: bathroomInvestment,
-		text: 'Typical project investment, not a starting price, a minimum budget, or a fixed quote.',
+		text: 'Typical project cost, not a starting price, a minimum budget, or a fixed quote.',
 		image: bathroomPhoto,
 		alt: 'A bathroom with a walnut vanity, arched mirrors, marble walls, a glass shower, and a freestanding tub.',
 		focus: 'center',
@@ -406,7 +406,7 @@ export const investmentSheets = [
 ];
 
 export const investmentTerms = [
-	'These figures are typical project investments. They are not starting prices, minimum budgets, or fixed quotes.',
+	'These figures are typical project costs. They are not starting prices, minimum budgets, or fixed quotes.',
 	'For a limited time, the initial consultation is complimentary.',
 	'Design is a separate phase. The design fee is not credited toward construction.',
 	'Construction is priced separately, from the approved design and the agreed scope.',
@@ -417,12 +417,12 @@ export const investments = [
 	{
 		title: 'Kitchen design & remodeling',
 		amount: kitchenInvestment,
-		note: 'Typical project investment. Not a quote or a starting price.',
+		note: 'Typical cost range. Not a quote or a starting price.',
 	},
 	{
 		title: 'Bathroom design & remodeling',
 		amount: bathroomInvestment,
-		note: 'Typical project investment. Not a quote or a starting price.',
+		note: 'Typical project cost. Not a quote or a starting price.',
 	},
 	{
 		title: 'Whole-home design & remodeling',
